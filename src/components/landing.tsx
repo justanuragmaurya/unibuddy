@@ -39,7 +39,7 @@ export default function Hero() {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5, delay: 0.6 }}
               >
-                Get NeooColab Java / C++ Solutions and various other university resources such as announcements, events, ppt's, previous year papers and other necessary to make you life much easier
+                Get NeooColab Java / C++ Solutions and various other university resources such as announcements, events, ppts, previous year papers and other necessary to make you life much easier
               </motion.p>
             </motion.div>
 

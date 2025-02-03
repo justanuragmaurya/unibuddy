@@ -116,7 +116,7 @@ export default function Navbar() {
               </DropdownMenu>
             ) : (
               <Button variant="outline" asChild className="hidden md:inline-flex">
-                <Link href="/login">Sign in</Link>
+                <Link href={`/login?callbackUrl=${encodeURIComponent(pathname)}`}>Sign in</Link>
               </Button>
             )}
 
