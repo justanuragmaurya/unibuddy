@@ -6,18 +6,15 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth/authOptions";
 import Navbar from "@/components/navbar";
 
-
 const poppins = Poppins({
-  weight: ['400', '500', '600', '700'],
+  weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
   variable: "--font-poppins",
 });
 
-
-
 export const metadata: Metadata = {
-  title: "Template by Anurag",
-  description: "github- https://github.com/justanuragmaurya",
+  title: "UniBuddy",
+  description: "One stop for all uni needs",
 };
 
 export default async function RootLayout({
@@ -29,9 +26,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body
-        className={`${poppins.className} antialiased`}
-      >
+      <body className={`${poppins.className} antialiased`}>
         <Providers session={session}>
           <Navbar />
           {children}

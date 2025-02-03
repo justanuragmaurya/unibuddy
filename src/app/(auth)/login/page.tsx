@@ -1,5 +1,4 @@
 'use client';
-
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useState } from 'react';

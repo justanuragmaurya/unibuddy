@@ -9,12 +9,17 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { usePathname } from 'next/navigation';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useSession, signOut } from "next-auth/react";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
+import { ThemeToggle } from "@/components/theme-toggle";
+
+
 
 export default function Navbar() {
+  const pathname = usePathname();
   const { data: session } = useSession();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -57,6 +62,7 @@ export default function Navbar() {
           </div>
 
           <div className="flex items-center gap-4">
+          <ThemeToggle/>
             {session?.user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -142,7 +148,7 @@ export default function Navbar() {
             ))}
             {!session?.user && (
               <Link
-                href="/auth"
+              href={`/login?callbackUrl=${encodeURIComponent(pathname)}`}
                 className="block px-4 py-2 text-sm font-medium text-muted-foreground hover:text-primary hover:bg-accent"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
