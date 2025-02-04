@@ -9,26 +9,37 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useRef, useState } from "react";
-// import Subjects from "@/lib/types/subjects"
-// import axios from "axios"
+import axios from "axios";
 
 export default function AddSubject() {
   const codeRef = useRef<HTMLInputElement>(null);
   const nameRef = useRef<HTMLInputElement>(null);
   const [sem, setSem] = useState(0);
-  const [loading,setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
-    if (codeRef?.current?.value == "" || nameRef?.current?.value == "" || sem == 0) {
-        return;
+    setLoading(true);
+
+    if (
+      codeRef?.current?.value == "" ||
+      nameRef?.current?.value == "" ||
+      sem == 0
+    ) {
+      return;
     }
     const data = {
-        code: codeRef?.current?.value,
-        name: nameRef?.current?.value,
-        semester: sem
+      courseCode: codeRef?.current?.value,
+      courseName: nameRef?.current?.value,
+      semester: sem,
+    };
+    const response = await axios.post("/api/add-course", data);
+    if (response.status == 200) {
+      window.alert(response.data.message);
+    } else {
+      window.alert(response.data.message);
     }
-    // const response = axios.post("/api/add-subject",data);
-  }
+    setLoading(false);
+  };
   return (
     <div className="flex flex-col max-w-3xl m-auto mt-10 gap-5 p-5">
       <div>
@@ -72,8 +83,9 @@ export default function AddSubject() {
         </Select>
       </div>
       <div>
-        <Button
-          onClick={handleSubmit}>Add</Button>
+        <Button disabled={loading} onClick={handleSubmit}>
+          Add
+        </Button>
       </div>
     </div>
   );

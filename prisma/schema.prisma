@@ -17,3 +17,9 @@ model User {
   updatedAt    DateTime       @updatedAt
 }
 
+model Courses{
+  id          String          @id @default(cuid())
+  courseCode  String          @unique
+  courseName  String          
+  semester    Int
+}
