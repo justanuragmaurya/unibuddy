@@ -18,6 +18,7 @@ export async function GET() {
         email: true,
         avatar: true,
         updatedAt: true,
+        isAdmin:true
       },
     });
 
