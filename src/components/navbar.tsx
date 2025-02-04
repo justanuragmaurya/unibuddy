@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -9,14 +9,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { usePathname } from 'next/navigation';
+import { usePathname } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useSession, signOut } from "next-auth/react";
 import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ThemeToggle } from "@/components/theme-toggle";
-
-
+import axios from "axios";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -26,18 +25,34 @@ export default function Navbar() {
   const handleSignOut = async (e: React.MouseEvent) => {
     e.preventDefault();
     try {
-      await signOut({ callbackUrl: '/' });
+      await signOut({ callbackUrl: "/" });
     } catch (error) {
-      console.error('Sign out error:', error);
+      console.error("Sign out error:", error);
     }
   };
 
   const navLinks = [
-    { href: '/', label: 'Home' },
-    { href: '/resources', label: 'Resources' },
-    { href: '/announcements', label: 'Announcements' },
-    { href: '/events', label: 'Events' },
+    { href: "/", label: "Home" },
+    { href: "/resources", label: "Resources" },
+    { href: "/announcements", label: "Announcements" },
+    { href: "/events", label: "Events" },
   ];
+
+  const [user, setUser] = useState<User | null>(null);
+
+  const getUser = async () => {
+    if (!session) {
+      return;
+    }
+    const response = await axios.get("/api/user");
+    if (response.status == 200) {
+      setUser(response.data);
+    }
+  };
+  
+  useEffect(() => {
+    getUser();
+  }, []);
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -45,9 +60,14 @@ export default function Navbar() {
         <div className="flex h-14 items-center justify-between">
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-2">
-              <span className="font-bold"><span className="bg-gradient-to-tr from-orange-300 to-orange-500 bg-clip-text text-transparent">Uni</span>Buddy</span>
+              <span className="font-bold">
+                <span className="bg-gradient-to-tr from-orange-300 to-orange-500 bg-clip-text text-transparent">
+                  Uni
+                </span>
+                Buddy
+              </span>
             </Link>
-            
+
             <div className="hidden md:flex ml-8 space-x-6">
               {navLinks.map((link) => (
                 <Link
@@ -62,7 +82,7 @@ export default function Navbar() {
           </div>
 
           <div className="flex items-center gap-4">
-          <ThemeToggle/>
+            <ThemeToggle />
             {session?.user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -102,6 +122,11 @@ export default function Navbar() {
                   <DropdownMenuItem asChild>
                     <Link href="/profile">Profile</Link>
                   </DropdownMenuItem>
+                  {user?.isAdmin && (
+                    <DropdownMenuItem asChild>
+                      <Link href="/admin-page">Admin Pannel</Link>
+                    </DropdownMenuItem>
+                  )}
                   <DropdownMenuItem asChild>
                     <Link href="/dashboard">Dashboard</Link>
                   </DropdownMenuItem>
@@ -115,8 +140,16 @@ export default function Navbar() {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <Button variant="outline" asChild className="hidden md:inline-flex">
-                <Link href={`/login?callbackUrl=${encodeURIComponent(pathname)}`}>Sign in</Link>
+              <Button
+                variant="outline"
+                asChild
+                className="hidden md:inline-flex"
+              >
+                <Link
+                  href={`/login?callbackUrl=${encodeURIComponent(pathname)}`}
+                >
+                  Sign in
+                </Link>
               </Button>
             )}
 
@@ -148,7 +181,7 @@ export default function Navbar() {
             ))}
             {!session?.user && (
               <Link
-              href={`/login?callbackUrl=${encodeURIComponent(pathname)}`}
+                href={`/login?callbackUrl=${encodeURIComponent(pathname)}`}
                 className="block px-4 py-2 text-sm font-medium text-muted-foreground hover:text-primary hover:bg-accent"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
@@ -160,4 +193,11 @@ export default function Navbar() {
       </div>
     </nav>
   );
+}
+
+export interface User {
+  id?: string;
+  name?: string;
+  email?: string;
+  isAdmin: boolean;
 }
