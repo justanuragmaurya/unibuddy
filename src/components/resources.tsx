@@ -7,7 +7,7 @@ export default async function Resources(){
             {semester.map((sem)=>{
                 return(
                     <Link href={`${"/resources/"+sem.value}`} key={sem.value}>
-                    <div className="p-5 rounded-md border border-black/25 hover:scale-105 hover:border-orange-400 hover:border-dashed transition " key={sem.value}>
+                    <div className="p-5 rounded-md border hover:scale-105 hover:border-orange-400 hover:border-dashed transition " key={sem.value}>
                         <h2 className="font-semibold">{sem.name}</h2>
                     </div>
                     </Link>

@@ -16,6 +16,7 @@ export default async function AdminPage() {
   if (!user?.isAdmin) {
     return <div>Not a admin </div>;
   }
-
-  return <div></div>;
+  return <div>
+    Admin Page Here
+  </div>
 }
