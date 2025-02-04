@@ -43,21 +43,19 @@ export default function AddSubject() {
   return (
     <div className="flex flex-col max-w-3xl m-auto mt-10 gap-5 p-5">
       <div>
-        <h2 className="text-sm my-1">Enter the Subject Code</h2>
+        <h2 className="text-sm my-1">Enter the Course Code</h2>
         <Input
           ref={codeRef}
           type="text"
-          placeholder="Enter Subject Code"
-          className=""
+          placeholder="Enter Course Code"
         />
       </div>
       <div>
-        <h2 className="text-sm my-1">Enter the Subject Name</h2>
+        <h2 className="text-sm my-1">Enter the Course Name</h2>
         <Input
           ref={nameRef}
           type="text"
-          placeholder="Enter Subject Name"
-          className=""
+          placeholder="Enter Course Name"
         />
       </div>
       <div>

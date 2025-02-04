@@ -26,9 +26,9 @@ export default async function AdminPage() {
         </span>
       </h1>
       <div className="md:m-auto md:mt-5 mt-5 mx-5 grid grid-cols-3 gap-5 w-full">
-        <Link href="/add-subjects/">
+        <Link href="/add-courses/">
           <div className="border p-10 rounded-md flex flex-col items-center hover:border-dashed hover:border-orange-500 hover:shadow-sm hover:font-semibold">
-            Add Subject
+            Add Course
           </div>
         </Link>
         <div className="border p-10 rounded-md flex flex-col items-center hover:border-dashed hover:border-orange-500 hover:shadow-sm hover:font-semibold">
